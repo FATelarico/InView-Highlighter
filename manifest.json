@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Page Highlighter + Export",
+  "version": "0.1.0",
+  "description": "Highlight selected text on a page and export highlights to JSON.",
+  "permissions": ["storage", "downloads", "contextMenus", "activeTab"],
+  "host_permissions": ["<all_urls>"],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "highlight": {
+      "suggested_key": { "default": "Alt+H" },
+      "description": "Highlight current selection"
+    },
+    "export": {
+      "suggested_key": { "default": "Alt+Shift+E" },
+      "description": "Export highlights for this page"
+    },
+    "clear": {
+      "suggested_key": { "default": "Alt+C" },
+      "description": "Clear highlights for this page"
+    }
+  }
+}
