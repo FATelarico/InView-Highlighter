@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Page Highlighter + Export",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "description": "Highlight selected text on a page and export highlights to JSON.",
   "permissions": ["storage", "downloads", "contextMenus", "activeTab"],
   "host_permissions": ["<all_urls>"],
