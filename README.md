@@ -1,8 +1,6 @@
 # InView-Highlighter
 Chromium extension that allows to highlight text on web pages and export highlights as JSON (reverse import possible) or HTML.
 
-## Test it
-
 ### A. Highlight
 1. Open a web-page with unprotected text (e.g., wikipedia)
 2. Select some text
@@ -16,3 +14,8 @@ Chromium extension that allows to highlight text on web pages and export highlig
 4. In the new tab, select the JSON exported earlier.
 5. Click "Import highlights (JSON)"
 6. Return to the original tab. 
+
+
+### C. Export to HTML (introduced in v. 0.1.5)
+1. Right click on an empty spot on the page, hoover over "In-View Highlighter", and click "Export highlights (HTML)"
+2. Open the file to find time-stamped snippets with HTML formatting.
