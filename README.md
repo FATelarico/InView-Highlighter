@@ -1,4 +1,7 @@
-# InView-Highlighter
+# <img width="200" alt="image" src="https://github.com/user-attachments/assets/af342b5e-75bc-4c28-8a7a-3d78b9ca10e3"/> InView-Highlighter
+
+
+
 Chromium extension that allows to highlight text on web pages and export highlights as JSON (reverse import possible) or HTML.
 
 ### A. Highlight
