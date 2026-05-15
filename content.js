@@ -277,9 +277,12 @@ async function reloadFromStorage() {
 }
 
 function serialiseRangeToHtml(range) {
-    const frag = range.cloneContents(); // preserves inline markup inside selection
+    const frag = range.cloneContents();
     const container = document.createElement("div");
     container.appendChild(frag);
+
+    // Re-wrap selection with semantic inline ancestors (fixes partial selection in <strong>, <em>, <a>, etc.)
+    wrapWithSemanticInlineAncestors(range, container);
 
     // Make links absolute and safe in the exported file
     container.querySelectorAll("a[href]").forEach(a => {
@@ -293,6 +296,42 @@ function serialiseRangeToHtml(range) {
     sanitiseExport(container);
     return container.innerHTML;
 }
+
+const SEMANTIC_INLINE_TAGS = new Set(["STRONG", "B", "EM", "I", "A", "CODE", "U", "S", "SUP", "SUB", "MARK"]);
+
+function wrapWithSemanticInlineAncestors(range, container) {
+    const startEl = nodeToElement(range.startContainer);
+    const endEl = nodeToElement(range.endContainer);
+    if (!startEl || !endEl) return;
+
+    // Walk up from the start, wrapping outward with any semantic inline that also contains the end.
+    for (let el = startEl; el && el !== document.body; el = el.parentElement) {
+        if (!SEMANTIC_INLINE_TAGS.has(el.tagName)) continue;
+        if (!el.contains(endEl)) continue;
+
+        // Avoid double-wrapping when cloneContents already produced a single wrapper of this type
+        if (
+            container.childNodes.length === 1 &&
+            container.firstChild.nodeType === Node.ELEMENT_NODE &&
+            container.firstChild.tagName === el.tagName
+        ) {
+            continue;
+        }
+
+        const wrapper = el.cloneNode(false); // shallow clone keeps relevant attrs (e.g. href on <a>)
+        // Optional: strip noisy attrs
+        wrapper.removeAttribute("id");
+
+        // Move current fragment under the wrapper
+        while (container.firstChild) wrapper.appendChild(container.firstChild);
+        container.appendChild(wrapper);
+    }
+}
+
+function nodeToElement(node) {
+    return node.nodeType === Node.ELEMENT_NODE ? node : node.parentElement;
+}
+
 
 function sanitiseExport(root) {
     // Remove obviously risky elements

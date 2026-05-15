@@ -1,8 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "Page Highlighter + Export",
-  "version": "0.1.5",
-  "description": "Highlight selected text on a page and export highlights to JSON.",
+  "name": "InView Highlighter",
+  "version": "0.3.0",
+  "description": "Highlight text on web pages and export/import highlights as JSON or HTML.",
+  "icons": {
+   "16": "icon16.png",
+   "32": "icon32.png",
+   "64": "icon64.png",
+   "128": "icon128.png"
+ },
   "permissions": ["storage", "downloads", "contextMenus", "activeTab"],
   "host_permissions": ["<all_urls>"],
   "background": { "service_worker": "background.js" },
